@@ -40,7 +40,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
             if (result.isSuccess()) {
                 cb.onSuccess(new JSOResult(result.getResult()));
             } else {
-                cb.onFailure(new CeleryException("result state is not SUCCESS"));
+                cb.onFailure(new CeleryException("result state was "
+                        + result.getStatus().toString()));
             }
             callbacks.remove(taskID);
             if (callbacks.size() == 0) {

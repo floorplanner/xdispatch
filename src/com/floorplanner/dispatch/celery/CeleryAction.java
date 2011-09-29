@@ -14,7 +14,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 public interface CeleryAction<R extends JavaScriptObject> extends
         Action<JSOResult<R>> {
 
-    static class CeleryResult extends JavaScriptObject {
+    public static class CeleryResult extends JavaScriptObject {
 
         enum Status {
             RECEIVED, RETRY, REVOKED, SUCCESS, STARTED, FAILURE, PENDING
@@ -24,7 +24,7 @@ public interface CeleryAction<R extends JavaScriptObject> extends
             return this.result;
         }-*/;
 
-        private final Status getStatus() {
+        public final Status getStatus() {
             return Status.valueOf(getStatusNative());
         }
 

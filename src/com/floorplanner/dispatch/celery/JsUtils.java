@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
@@ -20,6 +21,8 @@ public class JsUtils {
             j = new JSONNumber((Double) value);
         } else if (value instanceof Integer) {
             j = new JSONNumber((Integer) value);
+        } else if (value instanceof Boolean) {
+            j = JSONBoolean.getInstance((Boolean) value);
         } else if (value instanceof String) {
             j = new JSONString((String) value);
         } else if (value instanceof Object[]) {
