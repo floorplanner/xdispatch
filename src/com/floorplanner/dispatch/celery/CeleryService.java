@@ -9,6 +9,7 @@ import net.customware.gwt.dispatch.shared.Action;
 import net.customware.gwt.dispatch.shared.Result;
 
 import com.floorplanner.dispatch.celery.CeleryAction.CeleryResult;
+import com.floorplanner.dispatch.celery.CeleryAction.CeleryResult.Status;
 import com.floorplanner.dispatch.celery.CeleryAction.TaskInfo;
 import com.floorplanner.dispatch.core.JSOResult;
 import com.floorplanner.dispatch.core.Service;
@@ -39,11 +40,17 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
             AsyncCallback cb = callbacks.get(taskID);
             if (result.isSuccess()) {
                 cb.onSuccess(new JSOResult(result.getResult()));
-            } else {
+            } else if (result.getStatus() != Status.RETRY) {
                 cb.onFailure(new CeleryException("result state was "
-                        + result.getStatus().toString()));
+                        + result.getStatus().toString() + "\n\n"
+                        + result.getTraceback()));
             }
-            callbacks.remove(taskID);
+            switch (result.getStatus()) {
+            case RETRY:
+                break;
+            default:
+                callbacks.remove(taskID);
+            }
             if (callbacks.size() == 0) {
                 socket.disconnect();
             }

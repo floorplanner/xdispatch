@@ -36,6 +36,10 @@ public interface CeleryAction<R extends JavaScriptObject> extends
             return this.task_id;
         }-*/;
 
+        public final native String getTraceback() /*-{
+            return this.traceback;
+        }-*/;
+
         public final boolean isSuccess() {
             return getStatus() == Status.SUCCESS;
         }
