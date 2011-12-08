@@ -58,8 +58,11 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
     }
 
-    private static JavaScriptObject jsonTask(TaskInfo info) {
+    private static JavaScriptObject jsonTask(String exchange, TaskInfo info) {
         JSONObject task = new JSONObject();
+        if (exchange != null) {
+            task.put("exchange", jsonValue(exchange));
+        }
         task.put("id", jsonValue(info.id));
         task.put("task", jsonValue(info.task));
         task.put("args", jsonValue(info.args));
@@ -90,7 +93,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
         CeleryAction celer = (CeleryAction) action;
         TaskInfo info = celer.getTaskInfo();
         callbacks.put(info.id, callback);
-        socket.emit("celery", jsonTask(info));
+        socket.emit("celery", jsonTask(celer.getExchange(), info));
         return true;
     }
 

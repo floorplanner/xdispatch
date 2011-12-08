@@ -101,6 +101,17 @@ public interface CeleryAction<R extends JavaScriptObject> extends
 
     }
 
+    /**
+     * Exchange to publish the task. Return null for server configured default
+     * exchange.
+     * @return
+     */
+    String getExchange();
+
+    /**
+     * Object containing the name of task, and all arguments.
+     * @return
+     */
     TaskInfo getTaskInfo();
 
 }
